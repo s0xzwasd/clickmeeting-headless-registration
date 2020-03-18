@@ -1,18 +1,19 @@
 const puppeteer = require("puppeteer");
 const generator = require("generate-password");
+const fs = require("fs-extra");
 
 const args = process.argv.slice(2);
 const accountID = args[0];
 const companyName = args[1];
 
-const delay = (time) => {
+const delay = time => {
   return new Promise(function(resolve) {
     setTimeout(resolve, time);
   });
-}
+};
 
 (async () => {
-  const browser = await puppeteer.launch({ headless: false });
+  const browser = await puppeteer.launch();
   const page = await browser.newPage();
   const login = "tb-master+" + accountID + "@ya.ru";
   const password = generator.generate({
@@ -45,6 +46,8 @@ const delay = (time) => {
     console.log("Registration successfull");
     console.log("User login: " + login);
     console.log("User password: " + password);
+
+    fs.writeJsonSync("./user.json", { name: login, password: password, });
   }
 
   await browser.close();
