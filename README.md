@@ -10,6 +10,7 @@ The script allows you to create accounts in the Clickmeeting service without usi
 ![Github clone repository using](https://i.imgur.com/G30nOXG.png)
 3. We check that NodeJS is installed correctly, for this we execute the command in the console: `node -v`. If all is well, then we will see the current, downloaded version.
 ![Run node -v in console](https://i.imgur.com/98SBIvK.png)
+4. Go to the project folder and run the `npm install` (or `yarn install`) command.
 
 ## Using
 
