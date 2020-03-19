@@ -15,18 +15,26 @@ const delay = time => {
 (async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
+  const registrationPage = "https://clickmeeting.com/free-signup";
+  const successPage = "https://account-panel.clickmeeting.com/verify-account";
   const login = "tb-master+" + accountID + "@ya.ru";
   const password = generator.generate({
     length: 10,
     numbers: true
   });
 
+  if (isNaN(accountID)) {
+    console.log("Please use a number for ACCOUNT_ID");
+    await browser.close();
+    return process.exit(1);
+  }
+
   await page.setViewport({
     width: 1440,
     height: 800
   });
 
-  await page.goto("https://clickmeeting.com/free-signup", { waitUntil: "networkidle0" });
+  await page.goto(registrationPage, { waitUntil: "networkidle0" });
 
   await page.type("#user_name", companyName);
   await page.type("#user_email", login);
@@ -42,12 +50,12 @@ const delay = time => {
 
   await page.waitForNavigation();
 
-  if (page.url() === "https://account-panel.clickmeeting.com/verify-account") {
+  if (page.url() === successPage) {
     console.log("Registration successfull");
     console.log("User login: " + login);
     console.log("User password: " + password);
 
-    fs.writeJsonSync("./user.json", { name: login, password: password, });
+    fs.writeJsonSync("./user.json", { name: login, password: password });
   }
 
   await browser.close();
