@@ -26,6 +26,7 @@ The script allows you to create accounts in the Clickmeeting service without usi
 
 - [x] Basic account registration
 - [x] Use custom account ID and name
+- [ ] Use custom email
 - [x] Validate values
-- [ ] Error message and interruption if the script is incorrect
-- [ ] Display last registered accounts in a file
+- [x] Error message and interruption if the script is incorrect
+- [x] Display last registered accounts in a file
