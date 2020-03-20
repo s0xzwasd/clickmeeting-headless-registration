@@ -12,6 +12,12 @@ const delay = time => {
   });
 };
 
+const addNewData = (login, password) => {
+  fs.writeFile("users.txt", login + ";" + password + "\n", { flag: "a+" }, err => {
+    console.log(err ? err : "No errors! :)");
+  });
+};
+
 (async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
@@ -55,7 +61,7 @@ const delay = time => {
     console.log("User login: " + login);
     console.log("User password: " + password);
 
-    fs.writeJsonSync("./user.json", { name: login, password: password });
+    addNewData(login, password);
   }
 
   await browser.close();
