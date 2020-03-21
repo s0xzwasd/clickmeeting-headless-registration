@@ -1,20 +1,21 @@
-const puppeteer = require("puppeteer");
-const generator = require("generate-password");
 const fs = require("fs-extra");
+const generator = require("generate-password");
+const puppeteer = require("puppeteer");
 
 const args = process.argv.slice(2);
 const accountID = args[0];
 const companyName = args[1];
-
-const delay = time => {
-  return new Promise(function(resolve) {
-    setTimeout(resolve, time);
-  });
-};
+const customEmail = args[2];
 
 const addNewData = (login, password) => {
   fs.writeFile("users.txt", login + ";" + password + "\n", { flag: "a+" }, err => {
     console.log(err ? err : "No errors! :)");
+  });
+};
+
+const delay = time => {
+  return new Promise(function(resolve) {
+    setTimeout(resolve, time);
   });
 };
 
@@ -23,7 +24,7 @@ const addNewData = (login, password) => {
   const page = await browser.newPage();
   const registrationPage = "https://clickmeeting.com/free-signup";
   const successPage = "https://account-panel.clickmeeting.com/verify-account";
-  const login = "tb-master+" + accountID + "@ya.ru";
+  const login = customEmail ? customEmail : "tb-master+" + accountID + "@ya.ru";
   const password = generator.generate({
     length: 10,
     numbers: true
